@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dm-rag-quarkus
+  labels:
+    app: dm-rag-quarkus
+  namespace: k8tips
+  annotations:
+    cert-manager.io/cluster-issuer: educateswildcard
+spec:
+  rules:
+    - host: dm-rag-quarkus.dev.techravenconsulting.cloud
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dm-rag-quarkus
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - dm-rag-quarkus.dev.techravenconsulting.cloud
+      secretName: wildcard
